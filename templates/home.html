@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Customer Churn Prediction</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.1/css/bootstrap.min.css">
+  <style>
+    body {
+      background-color: #f8f9fa;
+      padding-top: 30px;
+    }
+    .container {
+      max-width: 900px;
+    }
+    .card {
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      background-color: #fff;
+    }
+    .btn-predict {
+      background-color: #007bff;
+      color: white;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2 class="text-center mb-4">Customer Churn Prediction</h2>
+    <div class="card">
+      <form action="/" method="POST">
+        <div class="row">
+
+          <!-- SeniorCitizen -->
+          <div class="form-group col-md-6">
+            <label>Senior Citizen</label>
+            <select name="query1" class="form-control">
+              <option value="0" {% if query1 == '0' %}selected{% endif %}>No</option>
+              <option value="1" {% if query1 == '1' %}selected{% endif %}>Yes</option>
+            </select>
+          </div>
+
+          <!-- MonthlyCharges -->
+          <div class="form-group col-md-6">
+            <label>Monthly Charges</label>
+            <input type="text" name="query2" value="{{query2}}" class="form-control" required>
+          </div>
+
+          <!-- TotalCharges -->
+          <div class="form-group col-md-6">
+            <label>Total Charges</label>
+            <input type="text" name="query3" value="{{query3}}" class="form-control" required>
+          </div>
+
+          <!-- Gender -->
+          <div class="form-group col-md-6">
+            <label>Gender</label>
+            <select name="query4" class="form-control">
+              <option value="Male" {% if query4 == 'Male' %}selected{% endif %}>Male</option>
+              <option value="Female" {% if query4 == 'Female' %}selected{% endif %}>Female</option>
+            </select>
+          </div>
+
+          <!-- Partner -->
+          <div class="form-group col-md-6">
+            <label>Partner</label>
+            <select name="query5" class="form-control">
+              <option value="Yes" {% if query5 == 'Yes' %}selected{% endif %}>Yes</option>
+              <option value="No" {% if query5 == 'No' %}selected{% endif %}>No</option>
+            </select>
+          </div>
+
+          <!-- Dependents -->
+          <div class="form-group col-md-6">
+            <label>Dependents</label>
+            <select name="query6" class="form-control">
+              <option value="Yes" {% if query6 == 'Yes' %}selected{% endif %}>Yes</option>
+              <option value="No" {% if query6 == 'No' %}selected{% endif %}>No</option>
+            </select>
+          </div>
+
+          <!-- PhoneService -->
+          <div class="form-group col-md-6">
+            <label>Phone Service</label>
+            <select name="query7" class="form-control">
+              <option value="Yes" {% if query7 == 'Yes' %}selected{% endif %}>Yes</option>
+              <option value="No" {% if query7 == 'No' %}selected{% endif %}>No</option>
+            </select>
+          </div>
+
+          <!-- MultipleLines -->
+          <div class="form-group col-md-6">
+            <label>Multiple Lines</label>
+            <select name="query8" class="form-control">
+              <option value="Yes" {% if query8 == 'Yes' %}selected{% endif %}>Yes</option>
+              <option value="No" {% if query8 == 'No' %}selected{% endif %}>No</option>
+              <option value="No phone service" {% if query8 == 'No phone service' %}selected{% endif %}>No phone service</option>
+            </select>
+          </div>
+
+          <!-- InternetService -->
+          <div class="form-group col-md-6">
+            <label>Internet Service</label>
+            <select name="query9" class="form-control">
+              <option value="DSL" {% if query9 == 'DSL' %}selected{% endif %}>DSL</option>
+              <option value="Fiber optic" {% if query9 == 'Fiber optic' %}selected{% endif %}>Fiber optic</option>
+              <option value="No" {% if query9 == 'No' %}selected{% endif %}>No</option>
+            </select>
+          </div>
+
+          <!-- OnlineSecurity -->
+          <div class="form-group col-md-6">
+            <label>Online Security</label>
+            <select name="query10" class="form-control">
+              <option value="Yes" {% if query10 == 'Yes' %}selected{% endif %}>Yes</option>
+              <option value="No" {% if query10 == 'No' %}selected{% endif %}>No</option>
+              <option value="No internet service" {% if query10 == 'No internet service' %}selected{% endif %}>No internet service</option>
+            </select>
+          </div>
+
+          <!-- OnlineBackup -->
+          <div class="form-group col-md-6">
+            <label>Online Backup</label>
+            <select name="query11" class="form-control">
+              <option value="Yes" {% if query11 == 'Yes' %}selected{% endif %}>Yes</option>
+              <option value="No" {% if query11 == 'No' %}selected{% endif %}>No</option>
+              <option value="No internet service" {% if query11 == 'No internet service' %}selected{% endif %}>No internet service</option>
+            </select>
+          </div>
+
+          <!-- DeviceProtection -->
+          <div class="form-group col-md-6">
+            <label>Device Protection</label>
+            <select name="query12" class="form-control">
+              <option value="Yes" {% if query12 == 'Yes' %}selected{% endif %}>Yes</option>
+              <option value="No" {% if query12 == 'No' %}selected{% endif %}>No</option>
+              <option value="No internet service" {% if query12 == 'No internet service' %}selected{% endif %}>No internet service</option>
+            </select>
+          </div>
+
+          <!-- TechSupport -->
+          <div class="form-group col-md-6">
+            <label>Tech Support</label>
+            <select name="query13" class="form-control">
+              <option value="Yes" {% if query13 == 'Yes' %}selected{% endif %}>Yes</option>
+              <option value="No" {% if query13 == 'No' %}selected{% endif %}>No</option>
+              <option value="No internet service" {% if query13 == 'No internet service' %}selected{% endif %}>No internet service</option>
+            </select>
+          </div>
+
+          <!-- StreamingTV -->
+          <div class="form-group col-md-6">
+            <label>Streaming TV</label>
+            <select name="query14" class="form-control">
+              <option value="Yes" {% if query14 == 'Yes' %}selected{% endif %}>Yes</option>
+              <option value="No" {% if query14 == 'No' %}selected{% endif %}>No</option>
+              <option value="No internet service" {% if query14 == 'No internet service' %}selected{% endif %}>No internet service</option>
+            </select>
+          </div>
+
+          <!-- StreamingMovies -->
+          <div class="form-group col-md-6">
+            <label>Streaming Movies</label>
+            <select name="query15" class="form-control">
+              <option value="Yes" {% if query15 == 'Yes' %}selected{% endif %}>Yes</option>
+              <option value="No" {% if query15 == 'No' %}selected{% endif %}>No</option>
+              <option value="No internet service" {% if query15 == 'No internet service' %}selected{% endif %}>No internet service</option>
+            </select>
+          </div>
+
+          <!-- Contract -->
+          <div class="form-group col-md-6">
+            <label>Contract</label>
+            <select name="query16" class="form-control">
+              <option value="Month-to-month" {% if query16 == 'Month-to-month' %}selected{% endif %}>Month-to-month</option>
+              <option value="One year" {% if query16 == 'One year' %}selected{% endif %}>One year</option>
+              <option value="Two year" {% if query16 == 'Two year' %}selected{% endif %}>Two year</option>
+            </select>
+          </div>
+
+          <!-- PaperlessBilling -->
+          <div class="form-group col-md-6">
+            <label>Paperless Billing</label>
+            <select name="query17" class="form-control">
+              <option value="Yes" {% if query17 == 'Yes' %}selected{% endif %}>Yes</option>
+              <option value="No" {% if query17 == 'No' %}selected{% endif %}>No</option>
+            </select>
+          </div>
+
+          <!-- PaymentMethod -->
+          <div class="form-group col-md-6">
+            <label>Payment Method</label>
+            <select name="query18" class="form-control">
+              <option value="Electronic check" {% if query18 == 'Electronic check' %}selected{% endif %}>Electronic check</option>
+              <option value="Mailed check" {% if query18 == 'Mailed check' %}selected{% endif %}>Mailed check</option>
+              <option value="Bank transfer (automatic)" {% if query18 == 'Bank transfer (automatic)' %}selected{% endif %}>Bank transfer (automatic)</option>
+              <option value="Credit card (automatic)" {% if query18 == 'Credit card (automatic)' %}selected{% endif %}>Credit card (automatic)</option>
+            </select>
+          </div>
+
+          <!-- Tenure -->
+          <div class="form-group col-md-6">
+            <label>Tenure (months)</label>
+            <input type="number" name="query19" value="{{query19}}" class="form-control" required>
+          </div>
+
+        </div>
+
+        <div class="text-center">
+          <button type="submit" class="btn btn-predict mt-3">Predict</button>
+        </div>
+        
+        {% if output1 %}
+        <div class="alert alert-info mt-4 text-center">
+          <h5>{{output1}}</h5>
+          <p>{{output2}}</p>
+        </div>
+        {% endif %}
+        
+      </form>
+    </div>
+  </div>
+</body>
+</html>
